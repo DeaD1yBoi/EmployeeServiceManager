@@ -1,0 +1,32 @@
+li > a {
+  &:hover {
+    background-color: rgba(0, 123, 255, 0.159);
+    border-radius: 5px;
+    text-decoration: underline;
+  }
+  &.active{
+    color:rgb(0, 123, 255);
+    font-weight: bold;
+    border-radius: 5px;
+  }
+}
+
+.navbar-container {
+  background-color: #0000001c;
+}
+
+
+.buttons-container {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.buttons-container .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+}

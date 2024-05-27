@@ -1,0 +1,29 @@
+[
+  {
+    "id": 9,
+    "username": "testusr2",
+    "fullName": "Mikola Yablukov",
+    "posTitle": "pos1",
+    "depTitle": "dep2",
+    "roleNames": [
+      "role1",
+      "role2",
+      "EMPLOYEE"
+    ],
+    "srvNames": [
+      "srv1",
+      "srv2"
+    ]
+  },
+  {
+    "id": 11,
+    "username": "testusr1",
+    "fullName": "Yehor Kulish",
+    "posTitle": "pos2",
+    "depTitle": "dep1",
+    "roleNames": [
+      "EMPLOYEE"
+    ],
+    "srvNames": []
+  }
+]

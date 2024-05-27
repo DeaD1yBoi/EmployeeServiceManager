@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/xepdb1
+    username: esm
+    password: esm
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: oracle
+  servlet:
+    multipart:
+      max-file-size: 50MB
+springdoc:
+  default-produces-media-type: application/json
+
+server:
+  servlet:
+    context-path: /api/v1/
+  port: 8888
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 5400000

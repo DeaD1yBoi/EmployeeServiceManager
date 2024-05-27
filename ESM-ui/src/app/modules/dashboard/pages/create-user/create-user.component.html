@@ -1,0 +1,44 @@
+<div class="container-fluid card login-container">
+  <h3 class="text-center">Create User</h3>
+  <hr />
+  <div class="alert alert-danger" role="alert" *ngIf="errMsg.length">
+    <p *ngFor="let msg of errMsg">{{ msg }}</p>
+  </div>
+  <div class="mb-3">
+    <label for="register" class="form-lable">Username</label>
+    <input
+      type="text"
+      id="create-username"
+      class="form-control"
+      placeholder="Username"
+      [(ngModel)]="createdUser.username"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="register" class="form-lable">User for Employee</label>
+    <select
+      class="form-select"
+      aria-label="EmployeeId"
+      [(ngModel)]="createdUser.empId"
+    >
+      <option *ngFor="let emp of employees" [value]="emp.id">
+        {{ emp.id }} - {{ emp.fullName }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="register" class="form-lable">Password</label>
+    <input
+      type="password"
+      id="create-password"
+      class="form-control"
+      placeholder="Password"
+      [(ngModel)]="createdUser.password"
+    />
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button type="button" class="btn btn-primary" (click)="createUser()">
+      <em class="fas fa-sign-in-alt">&nbsp;Create</em>
+    </button>
+  </div>
+</div>

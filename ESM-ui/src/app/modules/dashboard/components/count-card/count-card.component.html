@@ -1,0 +1,13 @@
+<div
+  class="d-flex justify-start gap-2 flex-wrap card text-center fs-4"
+  style="max-width: 16rem"
+>
+  <a [routerLink]="routerLinks[title]" class="text-decoration-none text-black">
+    <div class="card-header">
+      <i [ngClass]="iconMap[title] || 'fa-solid fa-question'"></i>&nbsp;{{
+        title
+      }}
+    </div>
+    <div class="card-body text-primary fs-3">{{ count }}</div>
+  </a>
+</div>

@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-container">
+  <div class="container-fluid">
+    <a href="javascript:void(0)" class="navbar-brand">ESM</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a routerLink="/dashboard" class="nav-link">
+            <i class="fas fa-home-alt"></i>&nbsp;Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="users" class="nav-link">
+            <i class="fa-solid fa-user"></i>&nbsp;Users
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="employees" class="nav-link">
+            <i class="fa-solid fa-address-card"></i>&nbsp;Employees
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="roles" class="nav-link">
+            <i class="fa-solid fa-gear"></i>&nbsp;Roles
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="services" class="nav-link">
+            <i class="fa-solid fa-wrench"></i>&nbsp;Services
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="requests" class="nav-link">
+            <i class="fa-solid fa-file-invoice"></i>&nbsp;Requests
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="requests/authorized" class="nav-link">
+            <i class="fa-solid fa-bell"></i>&nbsp;Waiting for response
+          </a>
+        </li>
+        <div class="nav-item buttons-container">
+          <button
+            routerLink="services/create"
+            class="btn btn-primary"
+            *ngIf="isAdmin()"
+          >
+            <i class="fa-solid fa-plus"></i>&nbsp;Create Service
+          </button>
+          <button
+            routerLink="employees/create"
+            class="btn btn-primary"
+            *ngIf="isAdmin()"
+          >
+            <i class="fa-solid fa-plus"></i>&nbsp;Create Employee
+          </button>
+          <button
+            routerLink="users/create"
+            *ngIf="isAdmin()"
+            class="btn btn-primary"
+          >
+            <i class="fa-solid fa-plus"></i>&nbsp;Create User
+          </button>
+          <button routerLink="requests/create" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>&nbsp;Create Request
+          </button>
+        </div>
+      </ul>
+      <div class="d-flex gap-2 align-items-center">
+        <span>Current user:</span>
+        <span class="text-capitilize fw-bold">{{ currentUser?.username }}</span>
+        <button class="btn btn-link" type="button" (click)="logout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

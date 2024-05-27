@@ -1,0 +1,46 @@
+<div class="container-fluid card login-container">
+  <h3 class="text-center">Create Employee</h3>
+  <hr />
+  <div class="alert alert-danger" role="alert" *ngIf="errMsg.length">
+    <p *ngFor="let msg of errMsg">{{ msg }}</p>
+  </div>
+  <div class="mb-3">
+    <label for="register" class="form-lable">Full Name</label>
+    <input
+      type="text"
+      id="create-username"
+      class="form-control"
+      placeholder="Full Name"
+      [(ngModel)]="employeeRequest.fullName"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="register" class="form-lable">Department</label>
+    <select
+      class="form-select"
+      aria-label="EmployeeId"
+      [(ngModel)]="employeeRequest.depId"
+    >
+      <option *ngFor="let dep of departments" [value]="dep?.id">
+        {{ dep?.id }} - {{ dep?.depTitle }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="register" class="form-lable">Position</label>
+    <select
+      class="form-select"
+      aria-label="EmployeeId"
+      [(ngModel)]="employeeRequest.posId"
+    >
+      <option *ngFor="let pos of positions" [value]="pos?.id">
+        {{ pos?.id }} - {{ pos?.posTitle }}
+      </option>
+    </select>
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button type="button" class="btn btn-primary" (click)="createEmployee()">
+      <em class="fas fa-sign-in-alt">&nbsp;Create</em>
+    </button>
+  </div>
+</div>

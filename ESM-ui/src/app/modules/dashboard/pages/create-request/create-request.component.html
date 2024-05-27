@@ -1,0 +1,28 @@
+<div class="container-fluid card request-container gap-0.5">
+  <h3 class="text-center pt-3">Create Role Request</h3>
+  <hr />
+  <div class="alert alert-danger" role="alert" *ngIf="errMsg.length">
+    <p *ngFor="let msg of errMsg">{{ msg }}</p>
+  </div>
+  <div class="mb-3">
+    <label for="request" class="form-lable">Requsted Service Name</label>
+    <select class="form-select" aria-label="Service" [(ngModel)] ="roleRequest.requestedServiceName">
+      <option *ngFor="let serviceName of servicesNames" [value]="serviceName">{{ serviceName }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="request" class="form-lable">Additional Note</label>
+    <input type="text" id="note" class="form-control" placeholder="Note" [(ngModel)]="roleRequest.note">
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="roleRequest.owner">
+    <label class="form-check-label" for="flexCheckDefault">
+      Owner Role
+    </label>
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button type="button" class="btn btn-primary" (click)="createRequest()">
+      <em class="fas fa-sign-in-alt">&nbsp;Create</em>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="d-flex justify-center flex-wrap gap-3">
+  <app-count-card
+  *ngFor="let item of counterArray"
+  [title]="item.key"
+  [count]="item.value"
+  [routerLink]="item.key | lowercase"
+></app-count-card>
+</div>
