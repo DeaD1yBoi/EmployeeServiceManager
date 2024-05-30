@@ -10,6 +10,7 @@ import com.esm.positions.Positions;
 import com.esm.positions.PositionsRepository;
 import com.esm.roles.Roles;
 import com.esm.roles.RolesRepository;
+import com.esm.user.Users;
 import com.esm.user.UsersRepository;
 import com.esm.userRoleRequests.Status;
 import com.esm.userRoleRequests.StatusRepository;
@@ -159,13 +160,17 @@ public class EmployeeServiceManagerApplication {
                         .username("admin")
                         .password("adminadmin")
                         .empId(employeesRepository.findByFullName("Yehor Kulish").orElseThrow().getId())
+
                         .build());
-                rolesRepository.save(Roles.builder()
-                        .id(rolesRepository.findByRoleName("ADMIN").orElseThrow().getId())
-                        .roleDesc("This is ADMIN role")
-                        .roleName("ADMIN")
-                        .owner(true)
-                        .users(List.of(usersRepository.findUsersByUsername("admin").orElseThrow()))
+                Users user = usersRepository.findUsersByUsername("admin").orElseThrow();
+                usersRepository.save(Users.builder()
+                                .id(user.getId())
+                                .roles(List.of(rolesRepository.findByRoleName("ADMIN").orElseThrow()))
+                                .accountLocked(false)
+                                .enabled(true)
+                                .password(user.getPassword())
+                                .empId(user.getEmpId())
+                                .username(user.getUsername())
                         .build());
             }
 
