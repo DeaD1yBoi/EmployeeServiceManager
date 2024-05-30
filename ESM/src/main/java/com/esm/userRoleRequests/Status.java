@@ -12,8 +12,6 @@ import lombok.*;
 public class Status {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "status_seq")
-    @SequenceGenerator(name = "status_seq", sequenceName = "status_seq", allocationSize = 1)
     private Integer id;
 
     @Column(unique = true, nullable = false)
