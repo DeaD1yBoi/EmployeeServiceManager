@@ -13,13 +13,12 @@ import com.esm.roles.RolesRepository;
 import com.esm.user.UsersRepository;
 import com.esm.userRoleRequests.Status;
 import com.esm.userRoleRequests.StatusRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -40,8 +39,7 @@ public class EmployeeServiceManagerApplication {
                                     EmployeesRepository employeesRepository,
                                     UsersRepository usersRepository,
                                     AuthenticationService authenticationService,
-                                    PasswordEncoder passwordEncoder,
-                                    EntityManager entityManager) {
+                                    JdbcTemplate jdbcTemplate) {
         return args -> {
 
             //Positions
@@ -150,8 +148,8 @@ public class EmployeeServiceManagerApplication {
             if (employeesRepository.findByFullName("Yehor Kulish").isEmpty()) {
                 employeesRepository.save(Employees.builder()
                         .fullName("Yehor Kulish")
-                        .department(departmentsRepository.findById(5).orElseThrow())
-                        .position(positionsRepository.findById(5).orElseThrow())
+                        .department(departmentsRepository.findByDepTitle("IT").orElseThrow())
+                        .position(positionsRepository.findByPosTitle("Developer").orElseThrow())
                         .build());
             }
 
@@ -159,7 +157,7 @@ public class EmployeeServiceManagerApplication {
             if (usersRepository.findUsersByUsername("admin").isEmpty()) {
                 authenticationService.register(RegistrationRequest.builder()
                         .username("admin")
-                        .password(passwordEncoder.encode("admin"))
+                        .password("adminadmin")
                         .empId(employeesRepository.findByFullName("Yehor Kulish").orElseThrow().getId())
                         .build());
                 rolesRepository.save(Roles.builder()
@@ -172,29 +170,26 @@ public class EmployeeServiceManagerApplication {
             }
 
             //Trigger
-            createTriggerIfNotExists(entityManager);
+            initializeTrigger(jdbcTemplate);
 
 
         };
     }
 
-    private void createTriggerIfNotExists(EntityManager entityManager) {
-        Query query = entityManager.createNativeQuery("SELECT trigger_name FROM all_triggers WHERE trigger_name = 'USER_ROLE_GRANTED_TRIGGER'");
-        List<?> result = query.getResultList();
-        if (result.isEmpty()) {
-            String createTriggerSQL = """
-                CREATE OR REPLACE TRIGGER USER_ROLE_GRANTED_TRIGGER
-                AFTER UPDATE ON ESM.USER_ROLE_REQUESTS
-                FOR EACH ROW
-                WHEN (NEW.STATUS_ID = 5)
-                BEGIN
-                    INSERT INTO ESM.USERS_ROLES (USERS_ID, ROLES_ID)
-                    VALUES (:NEW.USER_ROLE_REQUESTED_BY, :NEW.REQUESTED_ROLE);
-                END;
-                """;
-            entityManager.createNativeQuery(createTriggerSQL).executeUpdate();
-        }
-    }
 
+    private void initializeTrigger(JdbcTemplate jdbcTemplate) {
+        String triggerSQL = """
+            CREATE OR REPLACE TRIGGER USER_ROLE_GRANTED_TRIGGER
+            AFTER UPDATE ON ESM.USER_ROLE_REQUESTS
+            FOR EACH ROW
+            WHEN (NEW.STATUS_ID = 5)
+            BEGIN
+                INSERT INTO ESM.USERS_ROLES (USERS_ID, ROLES_ID)
+                VALUES (:NEW.USER_ROLE_REQUESTED_BY, :NEW.REQUESTED_ROLE);
+            END;
+            """;
+
+        jdbcTemplate.execute(triggerSQL);
+    }
 }
 
